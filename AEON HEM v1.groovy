@@ -67,6 +67,7 @@ metadata {
         capability "Sensor"
         capability "Refresh"
         capability "Polling"
+        capability "Battery"
         
         attribute "energy", "string"
         attribute "power", "string"
@@ -126,12 +127,21 @@ metadata {
                 foregroundColor: "#000000",
                 backgroundColors:[
                     [value: "0 Watts",      color: "#153591"],
+                    [value: "500 Watts",   color: "#1e9cbb"],
+                    [value: "1000 Watts",   color: "#90d2a7"],
+                    [value: "1500 Watts",   color: "#44b621"],
+                    [value: "2000 Watts",  color: "#f1d801"],
+                    [value: "2500 Watts",  color: "#d04e00"], 
+                    [value: "3000 Watts",  color: "#bc2323"] 
+                    /*
+                    [value: "0 Watts",      color: "#153591"],
                     [value: "3000 Watts",   color: "#1e9cbb"],
                     [value: "6000 Watts",   color: "#90d2a7"],
                     [value: "9000 Watts",   color: "#44b621"],
                     [value: "12000 Watts",  color: "#f1d801"],
                     [value: "15000 Watts",  color: "#d04e00"], 
-                    [value: "18000 Watts",  color: "#bc2323"]                
+                    [value: "18000 Watts",  color: "#bc2323"]  
+                    */
                 ]
             )
         }
@@ -204,6 +214,10 @@ metadata {
         standardTile("configure", "device.power", inactiveLabel: false, decoration: "flat") {
             state "configure", label:'', action:"configure", icon:"st.secondary.configure"
         }
+        valueTile("battery", "device.battery", inactiveLabel: false, decoration: "flat") {
+            state "battery", label:'${currentValue}% battery', unit:""
+        }
+
 
 // TODO: Add configurable delay button - Cycle through 10s, 30s, 1m, 5m, 60m, off?
 
@@ -211,9 +225,9 @@ metadata {
         details([
             "energyOne","energyDisp","energyTwo",
             "powerOne","powerDisp","powerTwo",
-            "ampsOne","ampsDisp","ampsTwo",         // Comment out these two lines for HEMv!
-            "voltsOne","voltsDisp","voltsTwo",      // Comment out these two lines for HEMv1
-            "reset","refresh", "configure"
+            //"ampsOne","ampsDisp","ampsTwo",         // Comment out these two lines for HEMv!
+            //"voltsOne","voltsDisp","voltsTwo",      // Comment out these two lines for HEMv1
+            "reset","refresh", "battery", "configure"
         ])
     }
     preferences {
@@ -229,7 +243,9 @@ def parse(String description) {
     if (cmd) {
         result = createEvent(zwaveEvent(cmd))
     }
-    if (result != null) log.debug "Parse returned ${result?.descriptionText}" 
+    if (result) {
+        log.debug "Parse returned ${result?.descriptionText}"
+    }
     return result
 }
 
@@ -324,6 +340,21 @@ def zwaveEvent(physicalgraph.zwave.commands.meterv1.MeterReport cmd) {
             }
         }
     }           
+}
+
+def zwaveEvent(physicalgraph.zwave.commands.batteryv1.BatteryReport cmd) {
+    def map = [:]
+    map.name = "battery"
+    map.unit = "%"
+    if (cmd.batteryLevel == 0xFF) {
+        map.value = 1
+        map.descriptionText = "${device.displayName} has a low battery"
+        map.isStateChange = true
+    } else {
+        map.value = cmd.batteryLevel
+    }
+    log.debug map
+    return map
 }
 
 def zwaveEvent(physicalgraph.zwave.Command cmd) {
