@@ -116,92 +116,28 @@ metadata {
     
     // Watts row
 
-        valueTile("powerDisp", "device.powerDisp") {
-            state (
-                "default", 
-                label:'${currentValue}', 
-                foregroundColors:[
-                    [value: 1, color: "#000000"],
-                    [value: 10000, color: "#ffffff"]
-                ], 
-                foregroundColor: "#000000",
-                backgroundColors:[
-                    [value: "0 Watts",      color: "#153591"],
-                    [value: "500 Watts",   color: "#1e9cbb"],
-                    [value: "1000 Watts",   color: "#90d2a7"],
-                    [value: "1500 Watts",   color: "#44b621"],
-                    [value: "2000 Watts",  color: "#f1d801"],
-                    [value: "2500 Watts",  color: "#d04e00"], 
-                    [value: "3000 Watts",  color: "#bc2323"] 
-                    /*
-                    [value: "0 Watts",      color: "#153591"],
-                    [value: "3000 Watts",   color: "#1e9cbb"],
-                    [value: "6000 Watts",   color: "#90d2a7"],
-                    [value: "9000 Watts",   color: "#44b621"],
-                    [value: "12000 Watts",  color: "#f1d801"],
-                    [value: "15000 Watts",  color: "#d04e00"], 
-                    [value: "18000 Watts",  color: "#bc2323"]  
-                    */
-                ]
-            )
+        valueTile("powerDisp", "device.powerDisp", decoration: "flat") {
+            state ("default", label:'${currentValue}')
         }
         valueTile("powerOne", "device.powerOne", decoration: "flat") {
             state("default", label:'${currentValue}')
         }
         valueTile("powerTwo", "device.powerTwo", decoration: "flat") {
-            state("default", label:'${currentValue}')
+            state("default", label:'${currentValue}' )
         }
 
     // Power row
     
-        valueTile("energyDisp", "device.energyDisp") {
-            state("default", label: '${currentValue}', backgroundColor:"#ffffff")
+        valueTile("energyDisp", "device.energyDisp", decoration: "flat") {
+            state("default", label: '${currentValue}')
         }
-        valueTile("energyOne", "device.energyOne") {
-            state("default", label: '${currentValue}', backgroundColor:"#ffffff")
+        valueTile("energyOne", "device.energyOne", decoration: "flat") {
+            state("default", label: '${currentValue}')
         }        
-        valueTile("energyTwo", "device.energyTwo") {
-            state("default", label: '${currentValue}', backgroundColor:"#ffffff")
+        valueTile("energyTwo", "device.energyTwo", decoration: "flat") {
+            state("default", label: '${currentValue}')
         }
         
-    
-    // Volts row
-    
-        valueTile("voltsDisp", "device.voltsDisp") {
-            state "default", label: '${currentValue}', backgroundColors:[
-                [value: "115.6 Volts",  color: "#bc2323"],
-                [value: "117.8 Volts",  color: "#D04E00"],
-                [value: "120.0 Volts",  color: "#44B621"],
-                [value: "122.2 Volts",  color: "#D04E00"],
-                [value: "124.4 Volts",  color: "#bc2323"]
-            ]
-        }
-        valueTile("voltsOne", "device.voltsOne", decoration: "flat") {
-            state "default", label:'${currentValue}'
-        }
-        valueTile("voltsTwo", "device.voltsTwo", decoration: "flat") {
-            state "default", label:'${currentValue}'
-        }
-    
-    // Amps row
-    
-        valueTile("ampsDisp", "device.ampsDisp") {
-            state "default", label: '${currentValue}' , foregroundColor: "#000000", color: "#000000", backgroundColors:[
-                [value: "0 Amps",   color: "#153591"],
-                [value: "25 Amps",  color: "#1e9cbb"],
-                [value: "50 Amps",  color: "#90d2a7"],
-                [value: "75 Amps",  color: "#44b621"],
-                [value: "100 Amps", color: "#f1d801"],
-                [value: "125 Amps", color: "#d04e00"], 
-                [value: "150 Amps", color: "#bc2323"]
-            ] 
-        }
-        valueTile("ampsOne", "device.ampsOne", decoration: "flat") {
-            state "default", label:'${currentValue}'
-        }
-        valueTile("ampsTwo", "device.ampsTwo", decoration: "flat") {
-            state "default", label:'${currentValue}'
-        }
     
     // Controls row
     
@@ -382,7 +318,7 @@ def reset() {
     state.voltsHigh = 0
     state.voltsLow = 999
     
-    def dateString = new Date().format("m/d/YY", location.timeZone)
+    def dateString = new Date().format("MM/dd/yy", location.timeZone)
     def timeString = new Date().format("h:mm a", location.timeZone)
     sendEvent(name: "energyOne", value: "Since\n"+dateString+"\n"+timeString, unit: "")
     sendEvent(name: "powerOne", value: "", unit: "")    
