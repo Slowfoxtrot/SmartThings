@@ -67,7 +67,7 @@ metadata {
         capability "Sensor"
         capability "Refresh"
         capability "Polling"
-        capability "Battery"
+        //capability "Battery"
         
         attribute "energy", "string"
         attribute "power", "string"
