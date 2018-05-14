@@ -63,7 +63,7 @@ metadata {
     {
         capability "Energy Meter"
         capability "Power Meter"
-        capability "Configuration"
+        //capability "Configuration"
         capability "Sensor"
         capability "Refresh"
         capability "Polling"
