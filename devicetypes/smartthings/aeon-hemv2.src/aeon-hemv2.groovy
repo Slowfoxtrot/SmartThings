@@ -382,7 +382,7 @@ def reset() {
     state.voltsHigh = 0
     state.voltsLow = 999
     
-    def dateString = new Date().format("m/d/YY", location.timeZone)
+    def dateString = new Date().format("M/d/YY", location.timeZone)
     def timeString = new Date().format("h:mm a", location.timeZone)
     sendEvent(name: "energyOne", value: "Since\n"+dateString+"\n"+timeString, unit: "")
     sendEvent(name: "powerOne", value: "", unit: "")    
