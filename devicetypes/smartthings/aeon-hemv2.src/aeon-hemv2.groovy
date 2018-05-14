@@ -227,7 +227,7 @@ metadata {
             "powerOne","powerDisp","powerTwo",
             //"ampsOne","ampsDisp","ampsTwo",         // Comment out these two lines for HEMv1
             //"voltsOne","voltsDisp","voltsTwo",      // Comment out these two lines for HEMv1
-            "reset","refresh", /*"battery",*/ "configure"
+            "reset","refresh", /*"battery", "configure"*/
         ])
     }
     preferences {
