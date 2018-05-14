@@ -116,7 +116,7 @@ metadata {
     
     // Watts row
 
-        valueTile("powerDisp", "device.powerDisp") {
+        valueTile("powerDisp", "device.powerDisp", decoration: "flat") {
             state (
                 "default", 
                 label:'${currentValue}', 
