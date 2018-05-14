@@ -278,7 +278,7 @@ def zwaveEvent(physicalgraph.zwave.commands.meterv1.MeterReport cmd) {
         else if (cmd.scale==2) {                
             newValue = Math.round( cmd.scaledMeterValue )       // really not worth the hassle to show decimals for Watts
             if (newValue != state.powerValue) {
-                dispValue = newValue
+                dispValue = newValue+"\nWatts"
                 sendEvent(name: "powerDisp", value: dispValue as String, unit: "")
                 
                 if (newValue < state.powerLow) {
