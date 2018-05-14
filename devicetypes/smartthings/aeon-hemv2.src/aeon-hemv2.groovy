@@ -116,23 +116,23 @@ metadata {
     
     // Watts row
 
-        valueTile("powerDisp", "device.powerDisp", decoration: "flat") {
+        valueTile("powerDisp", "device.powerDisp") {
             state (
                 "default", 
-                label:'${currentValue}', 
+                label:'${currentValue}\nWatts',
                 foregroundColors:[
                     [value: 1, color: "#000000"],
                     [value: 10000, color: "#ffffff"]
                 ], 
                 foregroundColor: "#000000",
                 backgroundColors:[
-                    [value: "0 Watts",      color: "#153591"],
-                    [value: "500 Watts",   color: "#1e9cbb"],
-                    [value: "1000 Watts",   color: "#90d2a7"],
-                    [value: "1500 Watts",   color: "#44b621"],
-                    [value: "2000 Watts",  color: "#f1d801"],
-                    [value: "2500 Watts",  color: "#d04e00"], 
-                    [value: "3000 Watts",  color: "#bc2323"] 
+                    [value: "0",    color: "#1DB100"],
+                    [value: "500",  color: "#61D836"],
+                    [value: "1000", color: "#88FA4E"],
+                    [value: "1500", color: "#F8BA00"],
+                    [value: "2000", color: "#FF968D"],
+                    [value: "2500", color: "#FF644E"],
+                    [value: "3000", color: "#EE220C"]
                     /*
                     [value: "0 Watts",      color: "#153591"],
                     [value: "3000 Watts",   color: "#1e9cbb"],
@@ -278,7 +278,7 @@ def zwaveEvent(physicalgraph.zwave.commands.meterv1.MeterReport cmd) {
         else if (cmd.scale==2) {                
             newValue = Math.round( cmd.scaledMeterValue )       // really not worth the hassle to show decimals for Watts
             if (newValue != state.powerValue) {
-                dispValue = newValue+"\nWatts"
+                dispValue = newValue
                 sendEvent(name: "powerDisp", value: dispValue as String, unit: "")
                 
                 if (newValue < state.powerLow) {
