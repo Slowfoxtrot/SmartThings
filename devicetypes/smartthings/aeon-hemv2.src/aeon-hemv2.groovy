@@ -119,7 +119,7 @@ metadata {
         valueTile("powerDisp", "device.powerDisp") {
             state (
                 "default", 
-                label:'${currentValue}\nWatts',
+                label:'${currentValue}',
                 foregroundColors:[
                     [value: 1, color: "#000000"],
                     [value: 10000, color: "#ffffff"]
